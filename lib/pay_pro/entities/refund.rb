@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 module PayPro
-  class Refund < Entity
-    def self.get(id)
-      api_request(method: 'get', uri: "/refunds/#{CGI.escape(id)}")
-    end
+  class Refund < Resource
+    include PayPro::Operations::Listable
 
-    def self.list(**kwargs)
-      api_request(method: 'get', uri: '/refunds', params: kwargs)
-    end
+    RESOURCE_PATH = 'refunds'
 
     def cancel
-      self.class.api_request(method: 'delete', uri: "/refunds/#{CGI.escape(id)}")
+      self.class.api_request(method: 'delete', uri: resource_url)
     end
   end
 end

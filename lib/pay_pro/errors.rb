@@ -26,6 +26,7 @@ module PayPro
   class ValidationError < Error
     def initialize(param:, **kwargs)
       @param = param
+      kwargs[:message] = "#{kwargs[:message]}, with param: \"#{@param}\""
 
       super(**kwargs)
     end

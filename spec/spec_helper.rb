@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'webmock/rspec'
+
+require 'debug'
 
 require 'pay_pro'
 

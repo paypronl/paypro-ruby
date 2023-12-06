@@ -13,7 +13,13 @@ require 'pay_pro/errors'
 require 'pay_pro/response'
 require 'pay_pro/util'
 
+require 'pay_pro/operations/creatable'
+require 'pay_pro/operations/deletable'
+require 'pay_pro/operations/listable'
+require 'pay_pro/operations/updatable'
+
 require 'pay_pro/entities/entity'
+require 'pay_pro/entities/resource'
 
 require 'pay_pro/entities/chargeback'
 require 'pay_pro/entities/customer'
@@ -38,6 +44,7 @@ module PayPro
       yield(config)
     end
 
+    # Shortcut method to directly set the API key
     def api_key=(api_key)
       configure do |config|
         config.api_key = api_key

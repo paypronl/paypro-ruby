@@ -7,13 +7,6 @@ module PayPro
       new(attributes: attributes)
     end
 
-    def self.api_request(method:, uri:, params: {}, body: nil)
-      client = PayPro::Client.default_client
-
-      response = client.request(method: method, uri: uri, params: params, body: body)
-      Util.to_entity(response.data, params: params)
-    end
-
     def initialize(attributes: {})
       generate_accessors(attributes)
     end

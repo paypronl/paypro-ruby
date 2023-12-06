@@ -11,5 +11,8 @@ group :development do
   gem 'rspec', '~> 3.0'
 
   gem 'rubocop', '~> 1.57'
+  gem 'rubocop-performance', '~> 1.19.0'
   gem 'rubocop-rspec', '~> 2.25.0'
+
+  gem 'webmock', '~> 3.19.0'
 end
