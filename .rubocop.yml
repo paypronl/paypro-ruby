@@ -5,6 +5,7 @@ require:
 AllCops:
   NewCops: enable
   SuggestExtensions: false
+  TargetRubyVersion: 3.0
 
 # We disable this to allow automatic releases
 Gemspec/RequireMFA:

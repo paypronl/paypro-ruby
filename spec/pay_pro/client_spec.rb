@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe PayPro::Client do
-  describe 'initialize' do
-    subject { described_class.new }
-  end
+  # describe 'initialize' do
+  #   subject { described_class.new }
+  # end
 
   describe '.default_client' do
     subject(:default_client) { described_class.default_client }
