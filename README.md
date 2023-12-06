@@ -36,7 +36,7 @@ gem 'paypro'
 ## Getting started
 
 In order to use the API you need to have a valid API key.
-You can find your API key in the [PayPro dashboard](https://app.paypro.nl/developers/api-key)
+You can find your API key in the [PayPro dashboard](https://app.paypro.nl/developers/api-keys)
 
 Example of using the API:
 
