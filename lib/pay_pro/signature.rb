@@ -17,7 +17,7 @@ module PayPro
       raise ArgumentError, 'tolerance must be an Integer' unless tolerance.is_a?(Integer)
 
       @payload = payload
-      @timestamp = timestamp
+      @timestamp = timestamp.utc
       @secret = secret
       @tolerance = tolerance
     end
