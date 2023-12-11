@@ -38,7 +38,7 @@ module PayPro
         )
       end
 
-      if @timestamp < Time.now - @tolerance
+      if @timestamp < Time.now.utc - @tolerance
         formatted_timestamp = @timestamp.strftime('%F %T')
 
         raise SignatureVerificationError.new(
