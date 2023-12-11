@@ -1,5 +1,8 @@
 # PayPro Ruby Library
 
+[![build](https://github.com/paypronl/paypro-ruby/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/paypronl/paypro-ruby/actions/workflows/build.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 The PayPro Ruby library can be used to make integrating with the PayPro API easier when using Ruby.
 It provides easy to use classes to interact with all resources available through the API.
 
@@ -33,7 +36,7 @@ gem 'paypro'
 ## Getting started
 
 In order to use the API you need to have a valid API key.
-You can find your API key in the [PayPro dashboard](https://www.paypro.nl/developers/api-key)
+You can find your API key in the [PayPro dashboard](https://app.paypro.nl/developers/api-keys)
 
 Example of using the API:
 
@@ -67,4 +70,10 @@ To run the linter:
 
 ```sh
 bundle exec rubocop
+```
+
+To run an `irb` with the gem already required you can use:
+
+```sh
+bin/console
 ```
