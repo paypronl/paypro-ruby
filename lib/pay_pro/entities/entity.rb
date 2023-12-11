@@ -7,6 +7,8 @@ module PayPro
       new(attributes: attributes)
     end
 
+    private_class_method :new
+
     def initialize(attributes: {})
       generate_accessors(attributes)
     end

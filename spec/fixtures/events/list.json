@@ -1,0 +1,39 @@
+{
+  "type": "list",
+  "count": 1,
+  "data": [
+    {
+      "id": "EVYK7KCFJAXA23UKSG",
+      "type": "event",
+      "event_type": "payment.created",
+      "created_at": "2023-12-11T10:56:02Z",
+      "payload": {
+        "_links": {
+          "self": "https://api.paypro.nl/payments/PPXNQT8MXCA2UT"
+        },
+        "amount": 15000,
+        "cancel_url": null,
+        "created_at": "2023-12-11T10:56:02Z",
+        "currency": "EUR",
+        "description": "Lifetime Toegang",
+        "id": "PPXNQT8MXCA2UT",
+        "paid_at": null,
+        "pay_method": {
+          "id": "ideal",
+          "name": "iDEAL",
+          "type": "pay_method"
+        },
+        "refunded_amount": 0,
+        "return_url": null,
+        "state": "open",
+        "type": "payment"
+      },
+      "_links": {
+        "self": "https://api.paypro.nl/events/EVYK7KCFJAXA23UKSG"
+      }
+    }
+  ],
+  "_links": {
+    "self": "https://api.paypro.nl/events"
+  }
+}

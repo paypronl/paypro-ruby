@@ -1,0 +1,21 @@
+{
+  "id": "PPSKN6FAN8KNE1",
+  "type": "payment",
+  "amount": 5000,
+  "cancel_url": null,
+  "created_at": "2023-12-11T15:31:14Z",
+  "currency": "EUR",
+  "description": "Unlimited Subscription",
+  "paid_at": "2023-12-11T15:31:44Z",
+  "pay_method": {
+    "id": "ideal",
+    "name": "iDEAL",
+    "type": "pay_method"
+  },
+  "refunded_amount": 0,
+  "return_url": null,
+  "state": "paid",
+  "_links": {
+    "self": "https://api.paypro.nl/payments/PPSKN6FAN8KNE1"
+  }
+}

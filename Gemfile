@@ -14,5 +14,7 @@ group :development do
   gem 'rubocop-performance', '~> 1.19.0'
   gem 'rubocop-rspec', '~> 2.25.0'
 
+  gem 'timecop', '~> 0.9.8'
+
   gem 'webmock', '~> 3.19.0'
 end

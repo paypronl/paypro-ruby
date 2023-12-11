@@ -1,0 +1,36 @@
+{
+  "type": "list",
+  "count": 1,
+  "data": [
+    {
+      "id": "PS8PTGUPZTSLBP",
+      "type": "subscription",
+      "cancel_at": null,
+      "created_at": "2023-12-11T15:31:14Z",
+      "currency": "EUR",
+      "customer": "CU6SRHQEFWD18A",
+      "description": "Unlimited Subscription",
+      "first_period": {
+        "amount": 5000,
+        "vat": 21.0
+      },
+      "period": {
+        "amount": 2500,
+        "interval": "month",
+        "multiplier": 1,
+        "vat": 21.0
+      },
+      "scheduling": "automatic",
+      "start_at": null,
+      "state": "active",
+      "subscription_type": "direct_debit",
+      "_links": {
+        "self": "https://api.paypro.nl/subscriptions/PS8PTGUPZTSLBP",
+        "customer": "https://api.paypro.nl/customers/CU6SRHQEFWD18A"
+      }
+    }
+  ],
+  "_links": {
+    "self": "https://api.paypro.nl/subscriptions"
+  }
+}

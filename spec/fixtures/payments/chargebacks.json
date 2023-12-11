@@ -1,0 +1,25 @@
+{
+  "type": "list",
+  "count": 1,
+  "data": [
+    {
+      "id": "PCV4U1P3UZTQPU",
+      "type": "chargeback",
+      "amount": 1500,
+      "charged_back_at": "2023-12-11T08:27:58Z",
+      "created_at": "2023-12-11T08:27:58Z",
+      "currency": "EUR",
+      "description": "Test Sale",
+      "payment": "PPJ8C04F07VCXA",
+      "reason": "MD06",
+      "state": "completed",
+      "_links": {
+        "self": "https://api.paypro.nl/chargebacks/PPSKN6FAN8KNE1",
+        "payment": "https://api.paypro.nl/payments/PPJ8C04F07VCXA"
+      }
+    }
+  ],
+  "_links": {
+    "self": "https://api.paypro.nl/payments/PPSKN6FAN8KNE1/chargebacks"
+  }
+}

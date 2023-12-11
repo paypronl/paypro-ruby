@@ -6,11 +6,13 @@ require 'cgi'
 require 'faraday'
 require 'json'
 require 'uri'
+require 'openssl'
 
 require 'pay_pro/client'
 require 'pay_pro/config'
 require 'pay_pro/errors'
 require 'pay_pro/response'
+require 'pay_pro/signature'
 require 'pay_pro/util'
 
 require 'pay_pro/operations/creatable'

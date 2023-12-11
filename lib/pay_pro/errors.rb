@@ -22,6 +22,7 @@ module PayPro
   class ConnectionError < Error; end
   class AuthenticationError < Error; end
   class ResourceNotFoundError < Error; end
+  class SignatureVerificationError < Error; end
 
   class ValidationError < Error
     def initialize(param:, **kwargs)

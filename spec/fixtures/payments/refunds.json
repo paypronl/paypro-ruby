@@ -1,0 +1,25 @@
+{
+  "type": "list",
+  "count": 1,
+  "data": [
+    {
+      "id": "PRNAUYTZ727UED",
+      "type": "refund",
+      "amount": 2000,
+      "created_at": "2023-12-11T14:53:48Z",
+      "currency": "EUR",
+      "description": "Test Payment",
+      "payment": "PPSKN6FAN8KNE1",
+      "reason": null,
+      "refunded_at": null,
+      "state": "processing",
+      "_links": {
+        "self": "https://api.paypro.nl/refunds/PRNAUYTZ727UED",
+        "payment": "https://api.paypro.nl/payments/PPSKN6FAN8KNE1"
+      }
+    }
+  ],
+  "_links": {
+    "self": "https://api.paypro.nl/payments/PPSKN6FAN8KNE1/refunds"
+  }
+}

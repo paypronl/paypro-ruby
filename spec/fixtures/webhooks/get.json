@@ -1,0 +1,13 @@
+{
+  "id": "WH43CVU3A1TD6Z",
+  "type": "webhook",
+  "active": true,
+  "created_at": "2023-12-05T13:33:37Z",
+  "description": "Webhook to send events to our server",
+  "name": "Test Webhook",
+  "secret": "996QF2kLfVcmF8hzikZVfeB7GPH2RdP7",
+  "url": "https://example.org/paypro/webhook",
+  "_links": {
+    "self": "http://api.paypro.nl/webhooks/WH43CVU3A1TD6Z"
+  }
+}
