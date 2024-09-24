@@ -72,7 +72,15 @@ RSpec.describe PayPro::Mandate do
 
     it 'does the correct request' do
       create
-      expect(a_request(:post, url).with(body: { customer: 'CUWSWVVPTL94VX', pay_method: 'direct-debit' }.to_json)).to have_been_made
+
+      expect(
+        a_request(:post, url).with(
+          body: {
+            customer: 'CUWSWVVPTL94VX',
+            pay_method: 'direct-debit'
+          }.to_json
+        )
+      ).to have_been_made
     end
 
     it 'returns a Mandate' do
