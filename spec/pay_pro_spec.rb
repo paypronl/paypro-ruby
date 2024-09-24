@@ -45,7 +45,7 @@ RSpec.describe PayPro do
       end
     end
 
-    it 'resets the api_key to the original value after the block' do
+    it 'resets the api_key to the original value after the block', :aggregate_failures do
       original_api_key = described_class.config.api_key
 
       described_class.with_api_key(api_key) do
