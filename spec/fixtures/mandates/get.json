@@ -1,0 +1,12 @@
+{
+  "id": "MDQVT0CGB8Z5JK",
+  "type": "mandate",
+  "state": "pending",
+  "customer": "CUWSWVVPTL94VX",
+  "pay_method": "direct-debit",
+  "created_at": "2023-06-30T12:40:10Z",
+  "_links": {
+    "self": "https://api.paypro.nl/mandates/MDQVT0CGB8Z5JK",
+    "customer": "https://api.paypro.nl/customers/CUWSWVVPTL94VX"
+  }
+}
