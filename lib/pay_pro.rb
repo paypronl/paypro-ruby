@@ -52,5 +52,14 @@ module PayPro
         config.api_key = api_key
       end
     end
+
+    def with_api_key(api_key)
+      original_api_key = config.api_key
+      self.api_key = api_key
+
+      yield
+    ensure
+      self.api_key = original_api_key
+    end
   end
 end

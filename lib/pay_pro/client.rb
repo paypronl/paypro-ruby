@@ -3,12 +3,13 @@
 module PayPro
   class Client
     attr_reader :config
+    attr_accessor :api_key
 
     def self.default_client
       Thread.current[:paypro_ruby_client] ||= new
     end
 
-    def initialize(config = {})
+    def initialize(config = PayPro.config)
       @config = case config
                 when Hash
                   PayPro.config.merge(config)

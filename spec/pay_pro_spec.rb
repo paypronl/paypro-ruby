@@ -35,4 +35,24 @@ RSpec.describe PayPro do
       expect(described_class.config.api_key).to eql(api_key)
     end
   end
+
+  describe '.with_api_key' do
+    let(:api_key) { '123456' }
+
+    it 'sets the api_key for the duration of the block' do
+      described_class.with_api_key(api_key) do
+        expect(described_class.config.api_key).to eql(api_key)
+      end
+    end
+
+    it 'resets the api_key to the original value after the block' do
+      original_api_key = described_class.config.api_key
+
+      described_class.with_api_key(api_key) do
+        expect(described_class.config.api_key).to eql(api_key)
+      end
+
+      expect(described_class.config.api_key).to eql(original_api_key)
+    end
+  end
 end
