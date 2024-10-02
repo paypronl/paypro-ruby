@@ -16,8 +16,6 @@
   ],
   "count": 0,
   "_links": {
-    "self": "http://example.com",
-    "next": "http://example.com",
-    "prev": "http://example.com"
+    "self": "https://api.paypro.nl/mandates"
   }
 }
