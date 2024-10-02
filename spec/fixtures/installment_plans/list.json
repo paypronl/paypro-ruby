@@ -1,0 +1,43 @@
+{
+  "type": "list",
+  "count": 1,
+  "data": [
+    {
+      "id": "PIPLEMXPQMHB544",
+      "type": "installment_plan",
+      "description": "Test installment plan",
+      "currency": "EUR",
+      "installment_plan_type": "direct_debit",
+      "state": "active",
+      "created_at": "2023-07-24T12:40:10Z",
+      "customer": "CU7JRN6W6K3DA9",
+      "mandate": "MDC7XX65BH42PW",
+      "period": {
+        "amount": 1000,
+        "vat": 21.0,
+        "multiplier": 1,
+        "interval": "month"
+      },
+      "first_period": {
+        "amount": 1000,
+        "vat": 21.0,
+        "multiplier": 1,
+        "interval": "month"
+      },
+      "number_of_periods": 5,
+      "payment_details": {
+        "return_url": null,
+        "cancel_url": null
+      },
+      "metadata": { },
+      "_links": {
+        "self": "https://api.paypro.nl/installment_plans/PIPLEMXPQMHB544",
+        "customer": "https://api.paypro.nl/customers/CU7JRN6W6K3DA9",
+        "mandate": "https://api.paypro.nl/mandates/MDC7XX65BH42PW"
+      }
+    }
+  ],
+  "_links": {
+    "self": "https://api.paypro.nl/installment_plans"
+  }
+}
