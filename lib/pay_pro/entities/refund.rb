@@ -2,12 +2,10 @@
 
 module PayPro
   class Refund < Resource
-    include PayPro::Operations::Listable
-
     RESOURCE_PATH = 'refunds'
 
-    def cancel
-      self.class.api_request(method: 'delete', uri: resource_url)
+    def cancel(**options)
+      api_request(method: 'delete', uri: resource_url, options: options)
     end
   end
 end

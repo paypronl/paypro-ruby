@@ -3,14 +3,8 @@
 module PayPro
   module Operations
     module Creatable
-      def self.included(base)
-        base.extend ClassMethods
-      end
-
-      module ClassMethods
-        def create(**body)
-          api_request(method: 'post', uri: resource_url, body: body.to_json)
-        end
+      def create(body = {}, **options)
+        api_request(method: 'post', uri: resource_url, body: body.to_json, options: options)
       end
     end
   end

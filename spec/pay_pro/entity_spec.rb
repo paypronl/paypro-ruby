@@ -2,7 +2,7 @@
 
 RSpec.describe PayPro::Entity do
   describe '.create_from_data' do
-    subject(:entity) { described_class.create_from_data(data) }
+    subject(:entity) { described_class.create_from_data(data, api_client: default_api_client) }
 
     let(:data) do
       {

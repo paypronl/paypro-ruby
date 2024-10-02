@@ -27,17 +27,17 @@ module PayPro
       #
       # It will try to find an API entity class, if it cannot be found it will fallback to the
       # default Entity class.
-      def to_entity(data, params: {})
+      def to_entity(data, api_client:, params: {})
         case data
         when Array
-          data.map { |i| to_entity(i) }
+          data.map { |i| to_entity(i, api_client: api_client) }
         when Hash
           if data.key?('type')
-            entity = entity_class(data['type']).create_from_data(data)
+            entity = entity_class(data['type']).create_from_data(data, api_client: api_client)
             entity.filters = params if entity.is_a?(PayPro::List)
             entity
           else
-            data.transform_values { |value| to_entity(value) }
+            data.transform_values { |value| to_entity(value, api_client: api_client) }
           end
         else
           data

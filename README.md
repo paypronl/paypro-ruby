@@ -46,14 +46,31 @@ require 'paypro'
 PayPro.api_key = 'pp_...'
 
 # Creating a payment
-payment = PayPro::Payment.create(amount: 500, currency: 'EUR', description: 'Test Payment')
+payment = PayPro::Payment.create({ amount: 500, currency: 'EUR', description: 'Test Payment' })
 
 # Retrieving all subscriptions
-subscription = PayPro::Subscription.list
+subscriptions = PayPro::Subscription.list
 
 # Retrieving a single customer
 customer = PayPro::Customer.get('CUSSDGDCJVZH5K')
 
+```
+
+## Per-request configuration
+
+When you have multiple API keys to use during a single request, you can specify these in all requests.
+
+```ruby
+require 'paypro'
+
+# Creating a payment
+payment = PayPro::Payment.create({ amount: 500, currency: 'EUR', description: 'Test Payment' }, api_key: 'pp_...')
+
+# Retrieving five subscriptions
+subscriptions = PayPro::Subscription.list({ limit: 5 }, api_key: 'pp_...')
+
+# Retrieving a single customer
+customer = PayPro::Customer.get('CUSSDGDCJVZH5K', api_key: 'pp_...', api_url: 'https://api-test.paypro.nl')
 ```
 
 ## Development
