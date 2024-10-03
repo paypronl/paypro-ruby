@@ -7,6 +7,8 @@ module PayPro
     attr_reader :chargebacks,
                 :customers,
                 :events,
+                :installment_plan_periods,
+                :installment_plans,
                 :mandates,
                 :pay_methods,
                 :payments,
@@ -47,6 +49,8 @@ module PayPro
       @chargebacks = Endpoints::Chargebacks.new(api_client: api_client)
       @customers = Endpoints::Customers.new(api_client: api_client)
       @events = Endpoints::Events.new(api_client: api_client)
+      @installment_plan_periods = Endpoints::InstallmentPlanPeriods.new(api_client: api_client)
+      @installment_plans = Endpoints::InstallmentPlans.new(api_client: api_client)
       @mandates = Endpoints::Mandates.new(api_client: api_client)
       @pay_methods = Endpoints::PayMethods.new(api_client: api_client)
       @payments = Endpoints::Payments.new(api_client: api_client)

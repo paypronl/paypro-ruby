@@ -10,10 +10,13 @@ RSpec.describe PayPro::Client do
       expect(client.config.api_key).to eql('pp_4321')
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'sets the endpoints correctly', :aggregate_failures do
       expect(client.chargebacks).to be_a(PayPro::Endpoints::Chargebacks)
       expect(client.customers).to be_a(PayPro::Endpoints::Customers)
       expect(client.events).to be_a(PayPro::Endpoints::Events)
+      expect(client.installment_plan_periods).to be_a(PayPro::Endpoints::InstallmentPlanPeriods)
+      expect(client.installment_plans).to be_a(PayPro::Endpoints::InstallmentPlans)
       expect(client.mandates).to be_a(PayPro::Endpoints::Mandates)
       expect(client.payments).to be_a(PayPro::Endpoints::Payments)
       expect(client.pay_methods).to be_a(PayPro::Endpoints::PayMethods)
@@ -22,6 +25,7 @@ RSpec.describe PayPro::Client do
       expect(client.subscriptions).to be_a(PayPro::Endpoints::Subscriptions)
       expect(client.webhooks).to be_a(PayPro::Endpoints::Webhooks)
     end
+    # rubocop:enable RSpec/ExampleLength
 
     context 'when config is a hash' do
       let(:config) { { api_key: 'pp_4321' } }

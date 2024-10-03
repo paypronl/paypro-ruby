@@ -2,9 +2,9 @@
 
 RSpec.describe PayPro::Subscription do
   describe '#update' do
-    subject(:update) { customer.update({ description: 'Limited Subscription' }) }
+    subject(:update) { subscription.update({ description: 'Limited Subscription' }) }
 
-    let(:customer) { described_class.create_from_data(data, api_client: default_api_client) }
+    let(:subscription) { described_class.create_from_data(data, api_client: default_api_client) }
     let(:data) { JSON.parse(File.read('spec/fixtures/subscriptions/get.json')) }
     let(:id) { 'PS8PTGUPZTSLBP' }
     let(:url) { "https://api.paypro.nl/subscriptions/#{id}" }
@@ -26,7 +26,7 @@ RSpec.describe PayPro::Subscription do
 
     context 'with options' do
       subject(:update) do
-        customer.update({ description: 'Limited Subscription' }, api_url: 'https://api-test.paypro.nl')
+        subscription.update({ description: 'Limited Subscription' }, api_url: 'https://api-test.paypro.nl')
       end
 
       let(:url) { "https://api-test.paypro.nl/subscriptions/#{id}" }
