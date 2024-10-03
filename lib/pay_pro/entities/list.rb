@@ -15,23 +15,21 @@ module PayPro
     end
 
     def next(params: {})
-      return List.create_from_data({ data: [] }) if next_link.nil?
+      return List.create_from_data({ data: [] }, api_client: api_client) if next_link.nil?
 
-      client = PayPro::Client.default_client
       params = filters.merge(params).merge(cursor: next_id)
 
-      response = client.request(method: 'get', uri: next_uri.path, params: params)
-      Util.to_entity(response.data)
+      response = api_client.request(method: 'get', uri: next_uri.path, params: params)
+      Util.to_entity(response.data, api_client: api_client)
     end
 
     def previous(params: {})
-      return List.create_from_data({ data: [] }) if previous_link.nil?
+      return List.create_from_data({ data: [] }, api_client: api_client) if previous_link.nil?
 
-      client = PayPro::Client.default_client
       params = filters.merge(params).merge(cursor: previous_id)
 
-      response = client.request(method: 'get', uri: previous_uri.path, params: params)
-      Util.to_entity(response.data)
+      response = api_client.request(method: 'get', uri: previous_uri.path, params: params)
+      Util.to_entity(response.data, api_client: api_client)
     end
 
     def empty?

@@ -3,14 +3,8 @@
 module PayPro
   module Operations
     module Listable
-      def self.included(base)
-        base.extend ClassMethods
-      end
-
-      module ClassMethods
-        def list(**kwargs)
-          api_request(method: 'get', uri: resource_url, params: kwargs)
-        end
+      def list(params = {}, **options)
+        api_request(method: 'get', uri: resource_url, params: params, options: options)
       end
     end
   end

@@ -1,0 +1,23 @@
+{
+  "type": "list",
+  "count": 1,
+  "data": [
+    {
+      "id": "ideal",
+      "type": "pay_method",
+      "name": "iDEAL",
+      "currencies": ["EUR"],
+      "minimum_amount": 10,
+      "maximum_amount": 5000000,
+      "details": [
+        {
+          "code": "BANKNL3Y",
+          "name": "TEST iDEAL issuer"
+        }
+      ]
+    }
+  ],
+  "_links": {
+    "self": "https://api.paypro.nl/payments"
+  }
+}

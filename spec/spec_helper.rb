@@ -6,6 +6,8 @@ require 'timecop'
 
 require 'debug'
 
+require './spec/support/pay_pro_helpers'
+
 require 'pay_pro'
 
 RSpec.configure do |config|
@@ -21,6 +23,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.include PayProHelpers
 
   config.before do
     PayPro.api_key = 'pp_test'
