@@ -55,8 +55,9 @@ RSpec.describe PayPro::Util do
   end
 
   describe '.to_entity' do
-    subject(:entity) { described_class.to_entity(data, params: params) }
+    subject(:entity) { described_class.to_entity(data, params: params, api_client: api_client) }
 
+    let(:api_client) { default_api_client }
     let(:params) { {} }
 
     context 'when data is a Hash' do
@@ -78,7 +79,8 @@ RSpec.describe PayPro::Util do
             id: 'PPK002A23LV3CG',
             amount: 5000,
             currency: 'EUR',
-            description: 'Test Payment'
+            description: 'Test Payment',
+            api_client: api_client
           )
         end
       end
@@ -99,7 +101,8 @@ RSpec.describe PayPro::Util do
         it 'has the correct attributes' do
           expect(entity).to have_attributes(
             count: 0,
-            data: []
+            data: [],
+            api_client: api_client
           )
         end
 
@@ -132,7 +135,8 @@ RSpec.describe PayPro::Util do
                 id: 'PPK002A23LV3CG',
                 amount: 5000,
                 currency: 'EUR',
-                description: 'Test Payment'
+                description: 'Test Payment',
+                api_client: api_client
               )
             )
           )
@@ -166,7 +170,8 @@ RSpec.describe PayPro::Util do
               id: 'PPK002A23LV3CG',
               amount: 5000,
               currency: 'EUR',
-              description: 'Test Payment'
+              description: 'Test Payment',
+              api_client: api_client
             )
           )
         )

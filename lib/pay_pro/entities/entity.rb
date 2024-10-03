@@ -2,15 +2,24 @@
 
 module PayPro
   class Entity
-    def self.create_from_data(data)
+    attr_reader :api_client
+
+    def self.create_from_data(data, api_client:)
       attributes = Util.normalize_api_attributes(data)
-      new(attributes: attributes)
+      new(attributes: attributes, api_client: api_client)
     end
 
     private_class_method :new
 
-    def initialize(attributes: {})
+    def initialize(api_client:, attributes: {})
+      @api_client = api_client
+      @attributes = attributes
+
       generate_accessors(attributes)
+    end
+
+    def inspect
+      "#<#{self.class}> #{JSON.pretty_generate(@attributes)}"
     end
 
     private
@@ -25,7 +34,7 @@ module PayPro
           end
         end
 
-        send("#{name}=", Util.to_entity(value))
+        send("#{name}=", Util.to_entity(value, api_client: api_client))
       end
     end
   end

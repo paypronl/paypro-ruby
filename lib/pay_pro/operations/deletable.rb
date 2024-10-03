@@ -3,8 +3,8 @@
 module PayPro
   module Operations
     module Deletable
-      def delete
-        self.class.api_request(method: 'delete', uri: resource_url)
+      def delete(**options)
+        api_request(method: 'delete', uri: resource_url, options: options)
       end
     end
   end

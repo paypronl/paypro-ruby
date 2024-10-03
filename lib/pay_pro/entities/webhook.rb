@@ -2,9 +2,7 @@
 
 module PayPro
   class Webhook < Resource
-    include PayPro::Operations::Creatable
     include PayPro::Operations::Deletable
-    include PayPro::Operations::Listable
     include PayPro::Operations::Updatable
 
     RESOURCE_PATH = 'webhooks'
@@ -26,7 +24,7 @@ module PayPro
       return unless signature_verifier.verify(signature: signature)
 
       data = JSON.parse(payload)
-      PayPro::Event.create_from_data(data)
+      PayPro::Event.create_from_data(data, api_client: nil)
     end
   end
 end

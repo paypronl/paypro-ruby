@@ -25,6 +25,9 @@ RSpec/ExampleLength:
   CountAsOne: ['array', 'hash', 'heredoc']
   Max: 10
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 RSpec/NestedGroups:
   Max: 5
 

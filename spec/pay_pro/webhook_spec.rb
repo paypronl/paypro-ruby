@@ -1,89 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe PayPro::Webhook do
-  describe '.list' do
-    subject(:list) { described_class.list }
-
-    let(:url) { 'https://api.paypro.nl/webhooks' }
-
-    before do
-      stub_request(:get, url).and_return(
-        body: File.read('spec/fixtures/webhooks/list.json')
-      )
-    end
-
-    it 'does the correct request' do
-      list
-      expect(a_request(:get, url)).to have_been_made
-    end
-
-    it 'returns a List' do
-      list
-      expect(list).to be_a(PayPro::List)
-    end
-
-    it 'has webhooks' do
-      list
-      expect(list.data[0]).to be_a(described_class)
-    end
-  end
-
-  describe '.get' do
-    subject(:get) { described_class.get(id) }
-
-    let(:id) { 'WH43CVU3A1TD6Z' }
-    let(:url) { "https://api.paypro.nl/webhooks/#{id}" }
-
-    before do
-      stub_request(:get, url).and_return(
-        body: File.read('spec/fixtures/webhooks/get.json')
-      )
-    end
-
-    it 'does the correct request' do
-      get
-      expect(a_request(:get, url)).to have_been_made
-    end
-
-    it 'returns a Webhook' do
-      expect(get).to be_a(described_class)
-    end
-
-    it 'has the correct attributes' do
-      expect(get).to have_attributes(
-        id: id,
-        name: 'Test Webhook',
-        url: 'https://example.org/paypro/webhook'
-      )
-    end
-  end
-
-  describe '#create' do
-    subject(:create) { described_class.create(active: true) }
-
-    let(:url) { 'https://api.paypro.nl/webhooks' }
-
-    before do
-      stub_request(:post, url).and_return(
-        body: File.read('spec/fixtures/webhooks/get.json'),
-        status: 201
-      )
-    end
-
-    it 'does the correct request' do
-      create
-      expect(a_request(:post, url).with(body: { active: true }.to_json)).to have_been_made
-    end
-
-    it 'returns a Webhook' do
-      expect(create).to be_a(described_class)
-    end
-  end
-
   describe '#update' do
-    subject(:update) { customer.update(active: false) }
+    subject(:update) { customer.update({ active: false }) }
 
-    let(:customer) { described_class.create_from_data(data) }
+    let(:customer) { described_class.create_from_data(data, api_client: default_api_client) }
     let(:data) { JSON.parse(File.read('spec/fixtures/webhooks/get.json')) }
     let(:id) { 'WH43CVU3A1TD6Z' }
     let(:url) { "https://api.paypro.nl/webhooks/#{id}" }
@@ -102,12 +23,23 @@ RSpec.describe PayPro::Webhook do
     it 'returns a Webhook' do
       expect(update).to be_a(described_class)
     end
+
+    context 'with options' do
+      subject(:update) { customer.update({ active: false }, api_url: 'https://api-test.paypro.nl') }
+
+      let(:url) { "https://api-test.paypro.nl/webhooks/#{id}" }
+
+      it 'does the correct request' do
+        update
+        expect(a_request(:patch, url).with(body: { active: false }.to_json)).to have_been_made
+      end
+    end
   end
 
   describe '#delete' do
     subject(:delete) { customer.delete }
 
-    let(:customer) { described_class.create_from_data(data) }
+    let(:customer) { described_class.create_from_data(data, api_client: default_api_client) }
     let(:data) { JSON.parse(File.read('spec/fixtures/webhooks/get.json')) }
     let(:url) { "https://api.paypro.nl/webhooks/#{customer.id}" }
 
@@ -124,6 +56,17 @@ RSpec.describe PayPro::Webhook do
 
     it 'returns a Webhook' do
       expect(delete).to be_a(described_class)
+    end
+
+    context 'with options' do
+      subject(:delete) { customer.delete(api_url: 'https://api-test.paypro.nl') }
+
+      let(:url) { "https://api-test.paypro.nl/webhooks/#{customer.id}" }
+
+      it 'does the correct request' do
+        delete
+        expect(a_request(:delete, url)).to have_been_made
+      end
     end
   end
 

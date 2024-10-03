@@ -1,228 +1,65 @@
 # frozen_string_literal: true
 
 RSpec.describe PayPro::Client do
-  # describe 'initialize' do
-  #   subject { described_class.new }
-  # end
+  describe 'initialize' do
+    subject(:client) { described_class.new(config) }
 
-  describe '.default_client' do
-    subject(:default_client) { described_class.default_client }
+    let(:config) { 'pp_4321' }
 
-    it { is_expected.to be_a(described_class) }
-
-    it 'is cached' do
-      second_client = described_class.default_client
-      expect(default_client).to eql(second_client)
+    it 'has the correct config' do
+      expect(client.config.api_key).to eql('pp_4321')
     end
 
-    it 'is cached for each thread' do
-      second_thread_client = nil
-
-      Thread.new do
-        second_thread_client = described_class.default_client
-      end.join
-
-      expect(default_client).not_to eql(second_thread_client)
+    it 'sets the endpoints correctly', :aggregate_failures do
+      expect(client.chargebacks).to be_a(PayPro::Endpoints::Chargebacks)
+      expect(client.customers).to be_a(PayPro::Endpoints::Customers)
+      expect(client.events).to be_a(PayPro::Endpoints::Events)
+      expect(client.mandates).to be_a(PayPro::Endpoints::Mandates)
+      expect(client.payments).to be_a(PayPro::Endpoints::Payments)
+      expect(client.pay_methods).to be_a(PayPro::Endpoints::PayMethods)
+      expect(client.refunds).to be_a(PayPro::Endpoints::Refunds)
+      expect(client.subscription_periods).to be_a(PayPro::Endpoints::SubscriptionPeriods)
+      expect(client.subscriptions).to be_a(PayPro::Endpoints::Subscriptions)
+      expect(client.webhooks).to be_a(PayPro::Endpoints::Webhooks)
     end
-  end
 
-  describe '#request' do
-    subject(:request) { client.request(method: method, uri: uri) }
+    context 'when config is a hash' do
+      let(:config) { { api_key: 'pp_4321' } }
 
-    let(:method) { 'get' }
-    let(:uri) { '/payments' }
-    let(:url) { 'https://api.paypro.nl/payments' }
+      it 'has the correct config' do
+        expect(client.config.api_key).to eql('pp_4321')
+      end
+    end
 
-    context 'when api_key is not set' do
-      let(:client) { described_class.new(api_key: nil) }
+    context 'when config is a PayPro::Config' do
+      let(:config) { PayPro::Config.new.merge(api_key: 'pp_4321') }
 
-      it 'raises an AuthenticationError' do
-        expect { request }.to raise_error(
-          PayPro::AuthenticationError,
-          'API key not set. Make sure to set the API key with "PayPro.api_key = <API_KEY>". You c' \
-          'an find your API key in the PayPro dashboard at "https://app.paypro.nl/developers/api-' \
-          'keys".'
+      it 'has the correct config' do
+        expect(client.config.api_key).to eql('pp_4321')
+      end
+    end
+
+    context 'when config is an invalid argument' do
+      let(:config) { 1234 }
+
+      it 'raises an error' do
+        expect { client }.to raise_error(
+          PayPro::ConfigurationError,
+          'Invalid argument: 1234'
         )
       end
     end
 
-    context 'when api_key is set' do
-      let(:client) { described_class.new(api_key: '1234') }
+    context 'when API key not supplied' do
+      let(:config) { PayPro::Config.new }
 
-      context 'when invalid JSON is returned with a success status' do
-        before { stub_request(:get, url).to_return(body: '', status: 200) }
-
-        it 'raises a Error' do
-          expect { request }.to raise_error(
-            PayPro::Error,
-            'Invalid response from API. The JSON returned in the body is not valid.'
-          )
-        end
-      end
-
-      context 'when invalid JSON is returned with a fail status' do
-        before { stub_request(:get, url).to_return(body: '', status: 500) }
-
-        it 'raises a Error' do
-          expect { request }.to raise_error(
-            PayPro::Error,
-            'Invalid response from API. The JSON returned in the body is not valid.'
-          )
-        end
-      end
-
-      context 'with status code 401' do
-        before { stub_request(:get, url).to_return(status: 401, body: '{}') }
-
-        it 'raises an AuthenticationError' do
-          expect { request }.to raise_error(
-            PayPro::AuthenticationError,
-            'Invalid API key supplied. Make sure to set a correct API key without any whitespace a' \
-            'round it. You can find your API key in the PayPro dashboard at "https://app.paypro.n' \
-            'l/developers/api-keys".'
-          )
-        end
-      end
-
-      context 'with status code 404' do
-        before { stub_request(:get, url).to_return(status: 404, body: '{}') }
-
-        it 'raises a ResourceNotFoundError' do
-          expect { request }.to raise_error(
-            PayPro::ResourceNotFoundError,
-            'Resource not found'
-          )
-        end
-      end
-
-      context 'with status code 422' do
-        before do
-          stub_request(:get, url).to_return(
-            status: 422,
-            body: {
-              error: {
-                message: 'Description must be set',
-                param: 'description',
-                type: 'invalid_request'
-              }
-            }.to_json
-          )
-        end
-
-        it 'raises a ValidationError' do
-          expect { request }.to raise_error(
-            PayPro::ValidationError,
-            'Description must be set, with param: "description"'
-          )
-        end
-      end
-
-      context 'when a timeout occurs' do
-        before { stub_request(:get, url).to_timeout }
-
-        it 'raises a PayPro::ConnectionError' do
-          expect { request }.to raise_error(
-            PayPro::ConnectionError,
-            'Failed to make a connection to the PayPro API. This could indicate a DNS issue or be' \
-            'cause you have no internet connection.'
-          )
-        end
-      end
-
-      context 'with headers' do
-        subject(:request) { client.request(method: method, uri: uri, headers: headers) }
-
-        let(:headers) { { 'X-Test-Header' => 'Test' } }
-
-        before do
-          stub_const('OpenSSL::VERSION', '2.2.2')
-          stub_const('RUBY_VERSION', '3.0.6')
-
-          stub_request(:get, url).and_return(status: 200, body: '{}')
-        end
-
-        it 'does the correct request' do
-          request
-
-          expect(
-            a_request(:get, url).with(
-              headers: {
-                'X-Test-Header' => 'Test',
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer 1234',
-                'User-Agent' => 'PayPro 0.1.0 / Ruby 3.0.6 / OpenSSL 2.2.2'
-              }
-            )
-          ).to have_been_made
-        end
-      end
-
-      context 'with a successful response' do
-        before do
-          stub_request(:get, url).and_return(
-            body: { success: 'True' }.to_json,
-            headers: { 'x-request-id' => '2de44ce1-2ace-4118-922e-e53ab33f6fc7' },
-            status: 200
-          )
-        end
-
-        it 'returns a PayPro::Response' do
-          expect(request).to be_a(PayPro::Response)
-        end
-
-        it 'has the correct attributes' do
-          expect(request).to have_attributes(
-            status: 200,
-            data: { 'success' => 'True' },
-            raw_body: '{"success":"True"}',
-            request_id: '2de44ce1-2ace-4118-922e-e53ab33f6fc7'
-          )
-        end
-      end
-
-      context 'with a post request' do
-        subject(:request) do
-          client.request(
-            method: 'post',
-            uri: uri,
-            body: { amount: 500 }.to_json,
-            headers: { 'X-Test-Header' => 'Test' },
-            params: { limit: 1 }
-          )
-        end
-
-        let(:uri) { '/customers' }
-        let(:url) { 'https://api.paypro.nl/customers?limit=1' }
-
-        before do
-          stub_const('OpenSSL::VERSION', '2.2.2')
-          stub_const('RUBY_VERSION', '3.0.6')
-
-          stub_request(:post, 'https://api.paypro.nl/customers?limit=1').and_return(
-            body: { success: 'True' }.to_json,
-            headers: { 'x-request-id' => '2de44ce1-2ace-4118-922e-e53ab33f6fc7' },
-            status: 201
-          )
-        end
-
-        it 'does a correct request' do
-          request
-
-          expect(
-            a_request(
-              :post,
-              url
-            ).with(
-              body: '{"amount":500}',
-              headers: {
-                'X-Test-Header' => 'Test',
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer 1234',
-                'User-Agent' => 'PayPro 0.1.0 / Ruby 3.0.6 / OpenSSL 2.2.2'
-              }
-            )
-          ).to have_been_made
-        end
+      it 'raises an error' do
+        expect { client }.to raise_error(
+          PayPro::ConfigurationError,
+          'API key not set or given. ' \
+          'Make sure to pass an API key or set a default with "PayPro.api_key=". ' \
+          'You can find your API key in the PayPro dashboard at "https://app.paypro.nl/developers/api-keys".'
+        )
       end
     end
   end

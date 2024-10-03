@@ -19,6 +19,7 @@ module PayPro
     end
   end
 
+  class ConfigurationError < Error; end
   class ConnectionError < Error; end
   class AuthenticationError < Error; end
   class ResourceNotFoundError < Error; end

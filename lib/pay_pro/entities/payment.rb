@@ -2,25 +2,22 @@
 
 module PayPro
   class Payment < Resource
-    include PayPro::Operations::Creatable
-    include PayPro::Operations::Listable
-
     RESOURCE_PATH = 'payments'
 
-    def cancel
-      self.class.api_request(method: 'delete', uri: resource_url)
+    def cancel(**options)
+      api_request(method: 'delete', uri: resource_url, options: options)
     end
 
-    def refund(**body)
-      self.class.api_request(method: 'post', uri: "#{resource_url}/refunds", body: body.to_json)
+    def refund(body = {}, **options)
+      api_request(method: 'post', uri: "#{resource_url}/refunds", body: body.to_json, options: options)
     end
 
-    def refunds(**kwargs)
-      self.class.api_request(method: 'get', uri: "#{resource_url}/refunds", params: kwargs)
+    def refunds(params = {}, **options)
+      api_request(method: 'get', uri: "#{resource_url}/refunds", params: params, options: options)
     end
 
-    def chargebacks(**kwargs)
-      self.class.api_request(method: 'get', uri: "#{resource_url}/chargebacks", params: kwargs)
+    def chargebacks(params = {}, **options)
+      api_request(method: 'get', uri: "#{resource_url}/chargebacks", params: params, options: options)
     end
   end
 end
