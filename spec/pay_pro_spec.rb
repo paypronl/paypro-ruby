@@ -2,7 +2,7 @@
 
 RSpec.describe PayPro do
   it 'has a version number' do
-    expect(PayPro::VERSION).to be('0.1.0')
+    expect(PayPro::VERSION).to be('2.0.0')
   end
 
   describe '.config' do

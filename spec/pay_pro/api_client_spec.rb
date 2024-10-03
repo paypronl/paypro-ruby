@@ -157,7 +157,7 @@ RSpec.describe PayPro::ApiClient do
                 'X-Test-Header' => 'Test',
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer 1234',
-                'User-Agent' => 'PayPro 0.1.0 / Ruby 3.0.6 / OpenSSL 2.2.2'
+                'User-Agent' => "PayPro #{PayPro::VERSION} / Ruby 3.0.6 / OpenSSL 2.2.2"
               }
             )
           ).to have_been_made
@@ -225,7 +225,7 @@ RSpec.describe PayPro::ApiClient do
                 'X-Test-Header' => 'Test',
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer 1234',
-                'User-Agent' => 'PayPro 0.1.0 / Ruby 3.0.6 / OpenSSL 2.2.2'
+                'User-Agent' => "PayPro #{PayPro::VERSION} / Ruby 3.0.6 / OpenSSL 2.2.2"
               }
             )
           ).to have_been_made
