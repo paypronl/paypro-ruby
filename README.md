@@ -43,16 +43,16 @@ Example of using the API:
 ```ruby
 require 'paypro'
 
-PayPro.api_key = 'pp_...'
+client = PayPro::Client.new('pp_...')
 
 # Creating a payment
-payment = PayPro::Payment.create({ amount: 500, currency: 'EUR', description: 'Test Payment' })
+payment = client.payments.create({ amount: 500, currency: 'EUR', description: 'Test Payment' })
 
 # Retrieving all subscriptions
-subscriptions = PayPro::Subscription.list
+subscriptions = client.subscriptions.list
 
 # Retrieving a single customer
-customer = PayPro::Customer.get('CUSSDGDCJVZH5K')
+customer = client.customers.get('CUSSDGDCJVZH5K')
 
 ```
 
@@ -63,14 +63,16 @@ When you have multiple API keys to use during a single request, you can specify 
 ```ruby
 require 'paypro'
 
+client = PayPro::Client.new('pp_...')
+
 # Creating a payment
-payment = PayPro::Payment.create({ amount: 500, currency: 'EUR', description: 'Test Payment' }, api_key: 'pp_...')
+payment = client.payments.create({ amount: 500, currency: 'EUR', description: 'Test Payment' }, api_key: 'pp_...')
 
 # Retrieving five subscriptions
-subscriptions = PayPro::Subscription.list({ limit: 5 }, api_key: 'pp_...')
+subscriptions = client.subscriptions.list({ limit: 5 }, api_key: 'pp_...')
 
 # Retrieving a single customer
-customer = PayPro::Customer.get('CUSSDGDCJVZH5K', api_key: 'pp_...', api_url: 'https://api-test.paypro.nl')
+customer = client.customers.get('CUSSDGDCJVZH5K', api_key: 'pp_...', api_url: 'https://api-test.paypro.nl')
 ```
 
 ## Development
