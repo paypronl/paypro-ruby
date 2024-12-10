@@ -6,5 +6,13 @@ module PayPro
     include PayPro::Operations::Updatable
 
     RESOURCE_PATH = 'customers'
+
+    def mandates(**options)
+      api_request(
+        method: 'get',
+        uri: "#{resource_url}/mandates",
+        options: options
+      )
+    end
   end
 end

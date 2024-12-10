@@ -16,6 +16,6 @@
   ],
   "count": 1,
   "_links": {
-    "self": "https://api.paypro.nl/mandates"
+    "self": "http://api.paypro.test:3000/customers/CUWSWVVPTL94VX/mandates"
   }
 }

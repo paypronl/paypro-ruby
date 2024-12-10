@@ -69,4 +69,46 @@ RSpec.describe PayPro::Customer do
       end
     end
   end
+
+  describe '#mandates' do
+    subject(:customer_mandates) { customer.mandates }
+
+    let(:customer) { described_class.create_from_data(data, api_client: default_api_client) }
+    let(:data) { JSON.parse(File.read('spec/fixtures/customers/get.json')) }
+    let(:url) { "https://api.paypro.nl/customers/#{customer.id}/mandates" }
+
+    before do
+      stub_request(:get, url).and_return(
+        body: File.read('spec/fixtures/customers/mandates.json')
+      )
+    end
+
+    it 'does the correct request' do
+      customer_mandates
+      expect(a_request(:get, url)).to have_been_made
+    end
+
+    it 'returns a List' do
+      customer_mandates
+      expect(customer_mandates).to be_a(PayPro::List)
+    end
+
+    it 'has mandates' do
+      customer_mandates
+      expect(customer_mandates.data[0]).to be_a(PayPro::Mandate)
+    end
+
+    context 'with options' do
+      subject(:customer_mandates) do
+        customer.mandates(api_url: 'https://api-test.paypro.nl')
+      end
+
+      let(:url) { "https://api-test.paypro.nl/customers/#{customer.id}/mandates" }
+
+      it 'does the correct request' do
+        customer_mandates
+        expect(a_request(:get, url)).to have_been_made
+      end
+    end
+  end
 end
