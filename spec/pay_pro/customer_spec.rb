@@ -36,36 +36,86 @@ RSpec.describe PayPro::Customer do
     end
   end
 
-  describe '#delete' do
-    subject(:delete) { customer.delete }
+  describe '#mandates' do
+    subject(:customer_mandates) { customer.mandates }
 
     let(:customer) { described_class.create_from_data(data, api_client: default_api_client) }
     let(:data) { JSON.parse(File.read('spec/fixtures/customers/get.json')) }
-    let(:url) { "https://api.paypro.nl/customers/#{customer.id}" }
+    let(:url) { "https://api.paypro.nl/customers/#{customer.id}/mandates" }
 
     before do
-      stub_request(:delete, url).and_return(
-        body: File.read('spec/fixtures/customers/get.json')
+      stub_request(:get, url).and_return(
+        body: File.read('spec/fixtures/customers/mandates.json')
       )
     end
 
     it 'does the correct request' do
-      delete
-      expect(a_request(:delete, url)).to have_been_made
+      customer_mandates
+      expect(a_request(:get, url)).to have_been_made
     end
 
-    it 'returns a Customer' do
-      expect(delete).to be_a(described_class)
+    it 'returns a List' do
+      customer_mandates
+      expect(customer_mandates).to be_a(PayPro::List)
+    end
+
+    it 'has mandates' do
+      customer_mandates
+      expect(customer_mandates.data[0]).to be_a(PayPro::Mandate)
     end
 
     context 'with options' do
-      subject(:update) { customer.delete(api_url: 'https://api-test.paypro.nl') }
+      subject(:customer_mandates) do
+        customer.mandates(api_url: 'https://api-test.paypro.nl')
+      end
 
-      let(:url) { "https://api.paypro.nl/customers/#{customer.id}" }
+      let(:url) { "https://api-test.paypro.nl/customers/#{customer.id}/mandates" }
 
       it 'does the correct request' do
-        delete
-        expect(a_request(:delete, url)).to have_been_made
+        customer_mandates
+        expect(a_request(:get, url)).to have_been_made
+      end
+    end
+  end
+
+  describe '#subscriptions' do
+    subject(:customer_subscriptions) { customer.subscriptions }
+
+    let(:customer) { described_class.create_from_data(data, api_client: default_api_client) }
+    let(:data) { JSON.parse(File.read('spec/fixtures/customers/get.json')) }
+    let(:url) { "https://api.paypro.nl/customers/#{customer.id}/subscriptions" }
+
+    before do
+      stub_request(:get, url).and_return(
+        body: File.read('spec/fixtures/customers/subscriptions.json')
+      )
+    end
+
+    it 'does the correct request' do
+      customer_subscriptions
+      expect(a_request(:get, url)).to have_been_made
+    end
+
+    it 'returns a List' do
+      customer_subscriptions
+      expect(customer_subscriptions).to be_a(PayPro::List)
+    end
+
+    it 'has subscriptions' do
+      customer_subscriptions
+      expect(customer_subscriptions.data[0]).to be_a(PayPro::Subscription)
+    end
+
+    context 'with options' do
+      subject(:customer_subscriptions) do
+        customer.subscriptions(api_url: 'https://api-test.paypro.nl')
+      end
+
+      let(:url) { "https://api-test.paypro.nl/customers/#{customer.id}/subscriptions" }
+
+      it 'does the correct request' do
+        customer_subscriptions
+        expect(a_request(:get, url)).to have_been_made
       end
     end
   end
