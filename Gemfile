@@ -10,9 +10,9 @@ group :development do
   gem 'rake', '~> 12.0'
   gem 'rspec', '~> 3.0'
 
-  gem 'rubocop', '~> 1.57'
-  gem 'rubocop-performance', '~> 1.19.0'
-  gem 'rubocop-rspec', '~> 2.25.0'
+  gem 'rubocop', '~> 1.75.5'
+  gem 'rubocop-performance', '~> 1.25.0'
+  gem 'rubocop-rspec', '~> 3.6.0'
 
   gem 'timecop', '~> 0.9.8'
 
