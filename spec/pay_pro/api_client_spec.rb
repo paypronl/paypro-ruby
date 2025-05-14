@@ -59,7 +59,7 @@ RSpec.describe PayPro::ApiClient do
       context 'when invalid JSON is returned with a success status' do
         before { stub_request(:get, url).to_return(body: '', status: 200) }
 
-        it 'raises a Error' do
+        it 'raises an Error' do
           expect { request }.to raise_error(
             PayPro::Error,
             'Invalid response from API. The JSON returned in the body is not valid.'
@@ -70,7 +70,7 @@ RSpec.describe PayPro::ApiClient do
       context 'when invalid JSON is returned with a fail status' do
         before { stub_request(:get, url).to_return(body: '', status: 500) }
 
-        it 'raises a Error' do
+        it 'raises an Error' do
           expect { request }.to raise_error(
             PayPro::Error,
             'Invalid response from API. The JSON returned in the body is not valid.'
@@ -120,6 +120,27 @@ RSpec.describe PayPro::ApiClient do
           expect { request }.to raise_error(
             PayPro::ValidationError,
             'Description must be set, with param: "description"'
+          )
+        end
+      end
+
+      context 'with status code 500' do
+        before do
+          stub_request(:get, url).to_return(
+            status: 500,
+            body: {
+              error: {
+                message: 'There was an internal error. Please try again.',
+                type: 'internal_error'
+              }
+            }.to_json
+          )
+        end
+
+        it 'raises an Error' do
+          expect { request }.to raise_error(
+            PayPro::Error,
+            'There was an internal error. Please try again.'
           )
         end
       end

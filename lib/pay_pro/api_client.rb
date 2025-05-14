@@ -71,12 +71,7 @@ module PayPro
 
       case pay_pro_response.status
       when 401
-        raise AuthenticationError.new(
-          message: 'Invalid API key supplied. ' \
-                   'Make sure to set a correct API key without any whitespace around it. ' \
-                   'You can find your API key in the PayPro dashboard at "https://app.paypro.nl/developers/api-keys".',
-          **default_params
-        )
+        raise authentication_error(**default_params)
       when 404
         raise ResourceNotFoundError.new(message: 'Resource not found', **default_params)
       when 422
@@ -86,11 +81,26 @@ module PayPro
           code: pay_pro_response.data['error']['type'],
           **default_params
         )
+      when 500
+        raise PayPro::Error.new(
+          message: pay_pro_response.data['error']['message'],
+          code: pay_pro_response.data['error']['type'],
+          **default_params
+        )
       end
     rescue JSON::ParserError
       raise PayPro::Error.new(
         message: 'Invalid response from API. ' \
                  'The JSON returned in the body is not valid.',
+        **default_params
+      )
+    end
+
+    def authentication_error(**default_params)
+      AuthenticationError.new(
+        message: 'Invalid API key supplied. ' \
+                 'Make sure to set a correct API key without any whitespace around it. ' \
+                 'You can find your API key in the PayPro dashboard at "https://app.paypro.nl/developers/api-keys".',
         **default_params
       )
     end
