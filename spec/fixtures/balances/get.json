@@ -1,0 +1,9 @@
+{
+  "id": "PBA7HA516X604D",
+  "type": "balance",
+  "amount": 1000,
+  "currency": "EUR",
+  "_links": {
+    "self": "https://api.paypro.nl/balances/PBA7HA516X604D"
+  }
+}
