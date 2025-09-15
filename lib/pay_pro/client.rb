@@ -6,15 +6,18 @@ module PayPro
 
     attr_reader :chargebacks,
                 :customers,
+                :balances,
                 :events,
                 :installment_plan_periods,
                 :installment_plans,
                 :mandates,
                 :pay_methods,
                 :payments,
+                :payouts,
                 :refunds,
                 :subscription_periods,
                 :subscriptions,
+                :top_ups,
                 :webhooks
 
     def initialize(config = {})
@@ -45,18 +48,21 @@ module PayPro
       )
     end
 
-    def setup_endpoints
+    def setup_endpoints # rubocop:disable Metrics/AbcSize
       @chargebacks = Endpoints::Chargebacks.new(api_client: api_client)
       @customers = Endpoints::Customers.new(api_client: api_client)
+      @balances = Endpoints::Balances.new(api_client: api_client)
       @events = Endpoints::Events.new(api_client: api_client)
       @installment_plan_periods = Endpoints::InstallmentPlanPeriods.new(api_client: api_client)
       @installment_plans = Endpoints::InstallmentPlans.new(api_client: api_client)
       @mandates = Endpoints::Mandates.new(api_client: api_client)
       @pay_methods = Endpoints::PayMethods.new(api_client: api_client)
       @payments = Endpoints::Payments.new(api_client: api_client)
+      @payouts = Endpoints::Payouts.new(api_client: api_client)
       @refunds = Endpoints::Refunds.new(api_client: api_client)
       @subscription_periods = Endpoints::SubscriptionPeriods.new(api_client: api_client)
       @subscriptions = Endpoints::Subscriptions.new(api_client: api_client)
+      @top_ups = Endpoints::TopUps.new(api_client: api_client)
       @webhooks = Endpoints::Webhooks.new(api_client: api_client)
     end
 

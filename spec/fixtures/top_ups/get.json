@@ -1,0 +1,26 @@
+{
+  "id": "TUMKR465ZG6QDU",
+  "type": "top_up",
+  "amount": 12300,
+  "currency": "EUR",
+  "description": "Top-up TUMKR465ZG6QDU",
+  "pay_method": {
+    "id": "ideal",
+    "type": "pay_method",
+    "name": "iDEAL",
+    "currencies": [
+      "EUR"
+    ],
+    "minimum_amount": 1,
+    "maximum_amount": 5000000,
+    "details": {}
+  },
+  "locale": "en",
+  "state": "paid",
+  "metadata": {},
+  "created_at": "2025-05-28T14:52:26Z",
+  "paid_at": "2025-05-28T14:53:03Z",
+  "_links": {
+    "self": "http://api.paypro.test:3000/top_ups/TUMKR465ZG6QDU"
+  }
+}
